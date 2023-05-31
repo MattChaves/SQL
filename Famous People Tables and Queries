@@ -1,0 +1,33 @@
+-- Create a table of actors and a movie they're in.
+CREATE TABLE celebrities (id INTEGER PRIMARY KEY, name TEXT, movie TEXT);
+
+INSERT INTO celebrities (name, movie) VALUES ("Christoph Waltz", "Django Unchained");
+INSERT INTO celebrities (name, movie) VALUES ("Jamie Foxx", "Django Unchained");
+INSERT INTO celebrities (name, movie) VALUES ("Will Smith", "Pursuit of Happyness");
+INSERT INTO celebrities (name, movie) VALUES ("Leonardo Di Caprio", "Titanic");
+INSERT INTO celebrities (name, movie) VALUES ("Harrison Ford", "Star Wars");
+INSERT INTO celebrities (name, movie) VALUES ("Ryan Gosling", "Blade Runner 2049");
+INSERT INTO celebrities (name, movie) VALUES ("Christian Bale", "American Psycho");
+INSERT INTO celebrities (name, movie) VALUES ("Matthew McConaughey","Interstellar");
+
+
+-- Create another table of the celebrity's hobbies, how many films they're in, and who they're married to in the same table. Use their id to connect to the previous table.
+CREATE TABLE hobwork (id INTEGER PRIMARY KEY, celebrity_id INTEGER, hobby TEXT, films INTEGER, marry_id INTEGER);
+
+INSERT INTO hobwork (celebrity_id, hobby, films, marry_id) VALUES (1, "Football", 30, 2);
+INSERT INTO hobwork (celebrity_id, hobby, films, marry_id) VALUES (2, "Painting", 20, 1);
+INSERT INTO hobwork (celebrity_id, hobby, films, marry_id) VALUES (3, "Boxing", 25, 4);
+INSERT INTO hobwork (celebrity_id, hobby, films, marry_id) VALUES (4, "Painting", 40, 3);
+INSERT INTO hobwork (celebrity_id, hobby, films, marry_id) VALUES (5, "Cigars", 50, 3);
+INSERT INTO hobwork (celebrity_id, hobby, films, marry_id) VALUES (6, "Driving", 15, 2);
+INSERT INTO hobwork (celebrity_id, hobby, films, marry_id) VALUES (7, "Driving", 15, 6);
+INSERT INTO hobwork (celebrity_id, hobby, films, marry_id) VALUES (8, "Shooting", 15, 8);
+
+
+-- Who has the most films? And what's their most popular film?
+SELECT celebrities.name, celebrities.movie AS Most_Popular_Film, hobwork.films AS Amount_Of_Films_Made
+    FROM celebrities
+    LEFT OUTER JOIN hobwork
+    ON hobwork.celebrity_id = celebrities.id
+    ORDER BY films DESC;
+
