@@ -1,0 +1,33 @@
+-- Create a database for a grocery store
+
+CREATE TABLE groceries (id INTEGER PRIMARY KEY, food TEXT, price INTEGER, dish TEXT);
+
+INSERT INTO groceries VALUES (1, "Ground Beef", 10, "Tacos");
+INSERT INTO groceries VALUES (2, "Carrots", 2, "Beef Stew");
+INSERT INTO groceries VALUES (3, "Onions", 3, "Burgers");
+INSERT INTO groceries VALUES (4, "Potatoes", 2, "Fries");
+INSERT INTO groceries VALUES (5, "Tomatoes", 3, "Pasta Sauce");
+INSERT INTO groceries VALUES (6, "Chicken", 8, "Chicken Stew");
+INSERT INTO groceries VALUES (7, "Cheese", 5, "Mac and Cheese");
+INSERT INTO groceries VALUES (8, "Salami", 6, "Sandwiches");
+
+-- Display the table
+SELECT * FROM groceries;
+
+-- Replace Chicken with Lamb and set its price to 7.
+UPDATE groceries SET food = "Lamb", price = 7 WHERE id = 6;
+
+-- Display the updated table
+SELECT * FROM groceries;
+
+-- Replace Carrots with Parsnips and suggest the dish Beef Stroganoff
+UPDATE groceries SET food = "Parsnips", price = 3, dish = "Beef Stroganoff" WHERE id = 2;
+
+-- Display the updated table
+SELECT * FROM groceries;
+
+-- Delete Salami from the list
+DELETE FROM groceries WHERE id = 8;
+
+-- Display the updated table
+SELECT * FROM groceries;
