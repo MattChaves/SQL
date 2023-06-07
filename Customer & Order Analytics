@@ -1,0 +1,9 @@
+--In this SQL, I'm answering specific questions about the data from a specific database. Some of the data was a bit messy so that's taken into account when querying it.
+
+--How many orders were placed in January?
+SELECT COUNT(orderID) FROM BIT_DB.JanSales WHERE length(orderID) = 6 AND orderID <> 'Order ID';
+
+--How many of those orders were for an iPhone?
+SELECT COUNT(orderID) FROM BIT_DB.JanSales WHERE length(orderID) = 6 AND orderID <> 'Order ID' AND Product = 'iPhone';
+
+--Select the customer account numbers for all the orders that were placed in February.
