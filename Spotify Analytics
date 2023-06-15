@@ -1,0 +1,57 @@
+# I downloaded a Spotify Dataset from Kaggle: https://www.kaggle.com/datasets/equinxx/spotify-top-50-songs-in-2021?resource=download
+# I created a table to insert all of the Spotify data into.
+# I then used SQL to analyze this data and answer specific questions about it.
+
+#Creating the table
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+song_key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+song_mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness decimal(8,7) NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL )
+
+#I then inserted the Spotify Data .csv into the table and explored the data asking the following questions and answering them with SQL.
+
+--What's the longest song in this dataset?
+SELECT artist_name, track_name, MAX(duration_ms) 
+FROM BIT_DB.Spotifydata;
+
+--What's the loudest song in this dataset?
+SELECT artist_name, track_name, MAX(loudness) 
+FROM BIT_DB.Spotifydata;
+
+--How many songs does Lil Nas X have in this dataset?
+SELECT count(artist_name) 
+FROM BIT_DB.Spotifydata 
+WHERE artist_name = 'Lil Nas X';
+
+--What are 5 songs that are going to get me pumped up?
+SELECT track_name, artist_name, energy 
+FROM BIT_DB.Spotifydata 
+ORDER BY energy DESC 
+LIMIT 5;
+
+--Who are the top 5 artists whose songs are perfect for a dance party?
+SELECT artist_name, danceability
+FROM BIT_DB.Spotifydata 
+ORDER BY danceability desc
+LIMIT 5;
+
+--What's the average danceability, loudness, speechiness, acousticness, and instrumentalness for each artist?
+SELECT distinct artist_name, avg(danceability), avg(loudness), avg(speechiness), avg(acousticness), avg(instrumentalness)
+FROM BIT_DB.Spotifydata 
+GROUP BY artist_name;
+
