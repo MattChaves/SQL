@@ -55,3 +55,13 @@ SELECT distinct artist_name, avg(danceability), avg(loudness), avg(speechiness),
 FROM BIT_DB.Spotifydata 
 GROUP BY artist_name;
 
+--Calculate the average popularity for the artists in the Spotify data table.
+--Then, for every artist with an average popularity of 90 or above, show their name, their average popularity, and label them as a “Top Star”.
+WITH temptable AS (
+    SELECT s.artist_name, avg(s.popularity) as average
+    FROM Spotifydata s
+    GROUP BY artist_name)
+
+SELECT artist_name, average, 'Top Star' AS tag
+FROM temptable
+WHERE average>=90;
