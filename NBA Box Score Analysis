@@ -1,0 +1,25 @@
+# I downloaded an NBA Box Score Dataset from Kaggle: https://www.kaggle.com/datasets/lukedip/nba-boxscore-dataset
+# I uploaded the database to SQLite.
+# I then used SQL to analyze this data and answer specific questions about it.
+
+# Did teams win more when home or away between 2013 and 2015?
+SELECT count(result) as 'Total',
+sum(case when result = 1 then 1 else 0 end) as 'Home',
+sum(case when result = 0 then 1 else 0 end) as 'Away' 
+FROM NBA.game_info 
+WHERE date BETWEEN '2013%' AND '2015%';
+
+# Did the trend continue between 2016 and 2018?
+SELECT count(result) as 'Total',
+sum(case when result = 1 then 1 else 0 end) as 'Home',
+sum(case when result = 0 then 1 else 0 end) as 'Away' 
+FROM NBA.game_info 
+WHERE date BETWEEN '2016%' AND '2018%';
+
+# Who had the best FG% in 2015 and what team did they play for?
+SELECT ps.player, MAX(ps.FGp) as FieldGoalPercentage, ps.team
+FROM player_stats ps
+LEFT JOIN game_info gi
+ON gi.game_id = ps.game_id
+WHERE gi.season = 1415
+ORDER BY ps.FGp DESC
