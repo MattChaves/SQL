@@ -23,3 +23,18 @@ LEFT JOIN game_info gi
 ON gi.game_id = ps.game_id
 WHERE gi.season = 1415
 ORDER BY ps.FGp DESC
+
+# Who had the most assists in the 2016 season?
+SELECT ps.player, MAX(ps.AST) as Assists
+FROM player_stats ps
+LEFT JOIN game_info gi
+ON gi.game_id = ps.game_id
+WHERE gi.season = 1516
+
+# Find the Knicks player with the most FGs from 2018 - 2020
+SELECT ps.player, sum(ps.fg) as 'Field Goals', ps.team
+from player_stats ps
+LEFT JOIN game_info gi
+ON gi.game_id = ps.game_id
+WHERE gi.date BETWEEN '2018%' AND '2020%' AND ps.team = 'NYK'
+ORDER BY ps.fg
