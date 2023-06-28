@@ -1,0 +1,23 @@
+# I downloaded a database file labeled "chinook" for a mock Digital Media Store.
+# I then used SQL to analyze this data and answer specific questions about it.
+
+# Show Customers (their full names, customer ID, and country) who are not in the US.
+Select FirstName, LastName, Customerid, Country from customers WHERE Country <> 'USA'
+
+# Show only the Customers from Brazil.
+Select * from customers WHERE Country = 'Brazil'
+
+# Find the Invoices of customers who are from Brazil. The resulting table should show the customer's full name, Invoice ID, Date of the invoice, and billing country.
+SELECT c.firstname, c.lastname, i.invoiceid, i.invoicedate, i.BillingCountry 
+from customers c
+left join invoices i
+on i.invoiceid = c.CustomerId
+WHERE i.BillingCountry = 'Brazil' 
+
+# Show the Employees who are Sales Agents.
+SELECT * from employees WHERE title LIKE 'Sales%Agent'
+
+# Find a unique/distinct list of billing countries from the Invoice table.
+SELECT distinct BillingCountry from invoices 
+
+# Provide a query that shows the invoices associated with each sales agent. The resulting table should include the Sales Agent's full name.
