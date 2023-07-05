@@ -21,3 +21,65 @@ SELECT * from employees WHERE title LIKE 'Sales%Agent'
 SELECT distinct BillingCountry from invoices 
 
 # Provide a query that shows the invoices associated with each sales agent. The resulting table should include the Sales Agent's full name.
+SELECT e.FirstName, e.LastName, i.InvoiceID, i.InvoiceDate, i.total 
+from employees e
+join customers c  on c.supportrepid = e.employeeid
+join invoices i on i.customerid = c.customerid
+
+# Show the Invoice Total, Customer name, Country, and Sales Agent name for all invoices and customers.
+SELECT 
+i.total,
+c.firstname as 'Customer First Name',
+c.lastname as 'Customer Last Name',
+c.country, 
+e.firstname as 'Support Rep First Name', 
+e.lastname as 'Support Rep Last Name'
+FROM invoices i
+JOIN customers c on c.CustomerId = i.customerId
+JOIN employees e on e.EmployeeId = c.SupportRepId
+
+# How many Invoices were there in 2009?
+SELECT count(invoiceid) from invoices where invoicedate like '2009%'
+
+# What are the total sales for 2009?
+SELECT sum(total) as 'Total Sales' from invoices where invoicedate like '2009%'
+
+# Write a query that includes the purchased track name with each invoice line ID.
+SELECT t.name, i.invoicelineid from tracks t 
+join invoice_items i on i.TrackId = t.trackid
+
+# Write a query that includes the purchased track name AND artist name with each invoice line ID.
+SELECT t.name as 'Track', a.name as 'Artist', i.invoicelineid from artists a
+left join albums al on a.ArtistId = al.ArtistId
+inner join tracks t on al.AlbumId = t.albumid
+left join invoice_items i on t.TrackId = i.TrackId
+
+# Provide a query that shows all the Tracks, and include the Album name, Media type, and Genre.
+SELECT t.name as 'Track Name', a.title as 'Album Title', m.name as 'Medium', g.name as 'Genre'
+FROM albums a
+JOIN tracks t on t.AlbumId = a.AlbumId
+JOIN media_types m on m.MediaTypeId = t.MediaTypeId
+JOIN genres g on g.GenreId = t.GenreId
+
+# Show the total sales made by each sales agent.
+SELECT e.firstname as 'Sales Rep First Name', 
+e.lastname as 'Sales Rep Last Name', 
+ROUND(SUM(i.total),2) as 'Total Sales' 
+from invoices i
+JOIN customers c on i.customerid = c.customerid
+JOIN employees e on c.SupportRepId = e.employeeid
+WHERE e.Title LIKE 'Sales%Agent'
+GROUP BY e.FirstName
+
+# Which sales agent made the most dollars in sales in 2009?
+SELECT e.firstname,
+       e.lastname,
+       ROUND(SUM(i.total), 2) as 'Total Sales'
+  FROM invoices i
+       JOIN
+       customers c ON i.CustomerId = c.customerid
+       JOIN
+       employees e ON c.SupportRepId = e.employeeid
+WHERE i.invoicedate LIKE '2009%' AND e.title LIKE 'Sales%Agent'
+GROUP BY e.firstname
+ORDER BY ROUND(SUM(i.total), 2) desc LIMIT 1;
